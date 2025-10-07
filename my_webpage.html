@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sample Responsive Page — Save as index.html</title>
+  <meta name="description" content="A clean, responsive single-file HTML template with dark mode, form validation, and small interactions.">
+  <style>
+    :root{
+      --bg:#f7f7fb;
+      --card:#ffffff;
+      --text:#0f1724;
+      --muted:#6b7280;
+      --accent:#2563eb;
+      --radius:14px;
+      --glass: rgba(255,255,255,0.6);
+    }
+    [data-theme="dark"]{
+      --bg:#0b1220;
+      --card:#071029;
+      --text:#e6eef8;
+      --muted:#9aa9c0;
+      --accent:#4f8cff;
+      --glass: rgba(255,255,255,0.03);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:linear-gradient(180deg,var(--bg), #e9f0ff);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:24px;
+    }
+
+    .container{
+      max-width:1000px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:20px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      text-decoration:none;
+      color:inherit;
+    }
+    .logo{
+      width:48px;height:48px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent), #7dd3fc);
+      display:flex;align-items:center;justify-content:center;
+      color:white;font-weight:700;box-shadow:0 6px 18px rgba(37,99,235,0.15);
+    }
+    nav{display:flex;gap:10px;align-items:center}
+    nav a{
+      text-decoration:none;color:var(--muted);font-weight:600;font-size:14px;padding:8px 10px;border-radius:8px;
+    }
+    nav a:hover{color:var(--text);background:var(--glass)}
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.06);
+      border:1px solid rgba(0,0,0,0.03);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:20px;
+      align-items:center;
+    }
+    .hero h1{
+      margin:0 0 8px 0;font-size:28px;
+    }
+    .lead{color:var(--muted);margin-bottom:16px}
+    .cta-row{display:flex;gap:12px}
+    .btn{
+      border:0;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;
+      background:var(--accent); color:white;
+      box-shadow:0 8px 20px rgba(37,99,235,0.12);
+    }
+    .btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(79,140,255,0.12);box-shadow:none}
+    .features{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;
+    }
+    .feature{padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)}
+    .feature h4{margin:0 0 8px 0}
+    .mock{
+      border-radius:12px;overflow:hidden;height:100%;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg, #f3f8ff, #ffffff);
+      color:var(--muted);
+      border:1px solid rgba(0,0,0,0.03);
+    }
+
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .contact-row{display:flex;flex-direction:column;gap:8px}
+    label{font-size:13px;color:var(--muted);font-weight:600}
+    input[type="text"], input[type="email"], textarea{
+      padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:transparent;color:var(--text);
+      outline:none;font-size:14px;
+    }
+    textarea{min-height:110px;resize:vertical}
+    .muted{color:var(--muted);font-size:13px}
+
+    footer{text-align:center;color:var(--muted);font-size:13px;padding-top:8px}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .features{grid-template-columns:repeat(2,1fr)}
+      .two-col{grid-template-columns:1fr}
+    }
+    @media (max-width:520px){
+      .features{grid-template-columns:1fr}
+    }
+
+    /* small helper */
+    .toolbar{display:flex;gap:8px;align-items:center}
+    .chip{background:var(--glass);padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px}
+    .error{color:#b91c1c;font-size:13px;margin-top:6px}
+  </style>
+</head>
+<body>
+  <div class="container card" role="main" aria-labelledby="page-title">
+    <header>
+      <a class="brand" href="#" aria-label="Home">
+        <div class="logo">R</div>
+        <div>
+          <div style="font-weight:800">Rashmi's Page</div>
+          <div style="font-size:12px;color:var(--muted)">Sample HTML template</div>
+        </div>
+      </a>
+
+      <div class="toolbar" aria-hidden="false">
+        <div class="chip" id="themeLabel">Light</div>
+        <button class="btn secondary" id="themeToggle" aria-pressed="false" title="Toggle dark mode">Toggle Theme</button>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Intro section">
+      <div>
+        <h1 id="page-title">A clean, responsive HTML template</h1>
+        <p class="lead">Single-file HTML with accessible markup, dark mode, simple form validation and tiny interactive helpers — perfect to learn from or reuse.</p>
+
+        <div class="cta-row">
+          <button class="btn" id="downloadBtn">Download as text</button>
+          <button class="btn secondary" id="copyBtn">Copy HTML</button>
+        </div>
+
+        <div class="features" aria-hidden="false" style="margin-top:16px">
+          <div class="feature card">
+            <h4>Offline-ready</h4>
+            <div class="muted">No CDN. Save and open locally.</div>
+          </div>
+          <div class="feature card">
+            <h4>Responsive</h4>
+            <div class="muted">Works on phone, tablet and desktop.</div>
+          </div>
+          <div class="feature card">
+            <h4>Accessible</h4>
+            <div class="muted">Semantic tags and keyboard-friendly controls.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="mock card" aria-label="Preview">
+        <div style="text-align:center;padding:20px;">
+          <div style="font-size:20px;font-weight:700">Preview</div>
+          <div style="margin-top:8px;color:var(--muted)">Try the form below — client-side validation included</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="two-col" aria-label="Main content" style="margin-top:18px">
+      <div class="card">
+        <h3 style="margin-top:0">Quick start</h3>
+        <ol style="padding-left:18px;margin-top:8px;color:var(--muted)">
+          <li>Save this entire file as <code>index.html</code>.</li>
+          <li>Open it with any modern browser (Chrome, Edge, Firefox, Safari).</li>
+          <li>Edit text in a simple editor (Notepad, VS Code) and refresh the browser to see changes.</li>
+        </ol>
+
+        <hr style="border:none;border-top:1px solid rgba(0,0,0,0.05);margin:12px 0">
+
+        <h4>Small interactive helpers</h4>
+        <div class="muted" style="margin-top:8px">Use the buttons at top to copy the HTML or download the page content as a file (works offline).</div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Contact</h3>
+        <form id="contactForm" class="contact-row" novalidate>
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required aria-required="true" />
+            <div class="error" id="errName" style="display:none">Please enter your name.</div>
+          </div>
+
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            <div class="error" id="errEmail" style="display:none">Please enter a valid email.</div>
+          </div>
+
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Write a short message" required></textarea>
+            <div class="error" id="errMessage" style="display:none">Message must be at least 10 characters.</div>
+          </div>
+
+          <div style="display:flex;gap:8px">
+            <button class="btn" type="submit">Send</button>
+            <button type="button" id="resetBtn" class="btn secondary">Reset</button>
+          </div>
+
+          <div id="formResult" class="muted" style="margin-top:8px"></div>
+        </form>
+      </div>
+    </section>
+
+    <footer style="margin-top:12px">
+      Built with ❤ — Save as <code>index.html</code> and open in any browser.
+    </footer>
+  </div>
+
+  <script>
+    // Theme toggle + persist in localStorage
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeLabel = document.getElementById('themeLabel');
+    const saved = localStorage.getItem('pref-theme') || 'light';
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme','dark');
+      themeLabel.textContent = 'Dark';
+      themeToggle.setAttribute('aria-pressed','true');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark){
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('pref-theme','light');
+        themeLabel.textContent = 'Light';
+        themeToggle.setAttribute('aria-pressed','false');
+      } else {
+        document.documentElement.setAttribute('data-theme','dark');
+        localStorage.setItem('pref-theme','dark');
+        themeLabel.textContent = 'Dark';
+        themeToggle.setAttribute('aria-pressed','true');
+      }
+    });
+
+    // Simple form validation (client-side only)
+    const contactForm = document.getElementById('contactForm');
+    const errName = document.getElementById('errName');
+    const errEmail = document.getElementById('errEmail');
+    const errMessage = document.getElementById('errMessage');
+    const formResult = document.getElementById('formResult');
+
+    function isValidEmail(email){
+      // conservative regex — good enough for simple validation
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let ok = true;
+      errName.style.display = 'none';
+      errEmail.style.display = 'none';
+      errMessage.style.display = 'none';
+      formResult.textContent = '';
+
+      const name = contactForm.name.value.trim();
+      const email = contactForm.email.value.trim();
+      const message = contactForm.message.value.trim();
+
+      if (name.length === 0) { errName.style.display = 'block'; ok = false; }
+      if (!isValidEmail(email)) { errEmail.style.display = 'block'; ok = false; }
+      if (message.length < 10) { errMessage.style.display = 'block'; ok = false; }
+
+      if (!ok) return;
+
+      // Simulate success (client-only). In a real site you'd POST to a server.
+      formResult.textContent = 'Thanks, ' + name + '! Your message is ready to be sent (demo).';
+      contactForm.reset();
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      contactForm.reset();
+      errName.style.display = errEmail.style.display = errMessage.style.display = 'none';
+      formResult.textContent = '';
+    });
+
+    // Copy page HTML to clipboard
+    const copyBtn = document.getElementById('copyBtn');
+    copyBtn.addEventListener('click', async () => {
+      try {
+        // Grab the full HTML serialization
+        const fullHtml = "<!doctype html>\\n" + document.documentElement.outerHTML;
+        await navigator.clipboard.writeText(fullHtml);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(()=> copyBtn.textContent = 'Copy HTML', 1600);
+      } catch (err) {
+        copyBtn.textContent = 'Copy failed';
+        setTimeout(()=> copyBtn.textContent = 'Copy HTML', 1400);
+      }
+    });
+
+    // Download current HTML as file
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.addEventListener('click', () => {
+      const blob = new Blob([ "<!doctype html>\\n" + document.documentElement.outerHTML ], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'page.html';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      downloadBtn.textContent = 'Downloaded';
+      setTimeout(()=> downloadBtn.textContent = 'Download as text', 1400);
+    });
+
+    // small accessibility: allow theme toggle via Enter/Space
+    themeToggle.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); themeToggle.click(); }
+    });
+  </script>
+</body>
+</html>
